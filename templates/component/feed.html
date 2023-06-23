@@ -1,0 +1,76 @@
+{% for room in rooms %}
+<div id="post" class="card">
+    <!-- Card header START -->
+    <div class="card-header border-0 pb-0">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+                <a class="avatar me-2 icon-md p-0" href="{% url 'base:room' room.id %}">
+                    <div class="avatar-img avatar rounded-circle bg-primary">
+                        <h6 class="text-white position-absolute top-50 start-50 translate-middle fw-bold">
+                            {{room.name|first|upper}}
+                        </h6>
+                    </div>
+                </a>
+                <!-- Info -->
+                <div>
+                    <h6 class="card-title mb-0"> <a class="pro-link" data-url="{% url 'base:room' room.id %}"> {{room.name|truncatewords:10}} </a></h6>
+                    <div class="nav nav-divider">
+                        <p class="nav-item mb-0 small mt-1"><a href="{% url 'base:user_profile' room.host.id %}">@{{room.host.username}}</a></p>
+                        <span class="nav-item small"> {{room.created|date:"D d M Y"}}</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Card share action START -->
+            <div class="dropdown">
+                <span class="small badge bg-primary">
+                    <a class="text-white" 
+                    href="{% if request.user in room.participants.all %}{% url 'base:remove_user_room' room.id %}{% else %}{% url 'base:add_user_room' room.id %}{% endif %}"> 
+                    {% if request.user in room.participants.all %} Following {% else %} Follow {% endif %}
+                    </a>
+                </span>
+            </div>
+            <!-- Card share action END -->
+        </div>
+    </div>
+    <!-- Card header START -->
+    <!-- Card body START -->
+    <div class="card-body">
+        <p>{{room.summary}}</p>
+        <!-- Card feed grid START -->
+        {% if room.image %}
+        <div class="d-flex justify-content-between">
+            <div class="row">
+                <center>
+                    <div class="col-7">
+
+                        <a class="h-100" href="{% url 'base:room' room.id %}">
+                            <img class="rounded img-fluid" src="{{room.image.url}}" alt="Image">
+                        </a>
+                    </div>
+                </center>
+            </div>
+        </div>
+        {% endif %}
+        
+
+        <ul class="nav nav-pills nav-pills-light nav-fill nav-stack small py-1 mt-3">
+            <li class="nav-item">
+                <a class="nav-link mb-0 active p-2" href="{% url 'base:home' %}?q={{room.topic.name}}">{{room.topic.name|title}}. Followers {{room.participants.all.count}}</a>
+            </li>
+            <!-- Card share action menu START -->
+            <li class="nav-item dropdown">
+                <a href="{% url 'base:room' room.id %}" class="nav-link mb-0">
+                    <i class="bi bi-heart-fill"></i> {{room.like.all.count}}
+                </a>
+            </li>
+            <!-- Card share action menu END -->
+            <li class="nav-item">
+                <a class="pro-link btn btn-warning" data-url="{% url 'base:update_room' room.id %}">Update</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mb-0" href="{% url 'base:room' room.id %}"> <i class="bi bi-chat-fill pe-1"></i> {{room.comment_set.all.count}}</a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endfor %}

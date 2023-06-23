@@ -1,0 +1,272 @@
+{% extends 'base.html' %}
+{% block title %}Room{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div class="container">
+    <div class="row g-4">
+        <!-- Main content START -->
+        <div class="col-lg-10 mx-auto">
+            <div class="vstack gap-4">
+                <!-- Blog single START -->
+                <div class="card card-body">
+                    {% if room.image %}
+                    <div class="card-image">
+                        <div class="overflow-hidden w-100">
+                            <div class="card-image card-img-top overflow-hidden">
+                                <img class="rounded-4" src="{{room.image.url}}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="card-image">
+                        <div class="overflow-hidden fullscreen-video w-100">
+                            <div class="player-wrapper card-img-top overflow-hidden">
+                                <video class="player-html" controls crossorigin="anonymous"
+                                    poster="assets/images/videos/poster.jpg">
+                                    <source src="assets/images/videos/video-feed.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="mt-4">
+                        <!-- Tag -->
+                        <a href="#"
+                            class="badge bg-danger bg-opacity-10 text-danger mb-2 fw-bold">{{room.topic.name|title}}</a>
+                        <!-- Title info -->
+                        <h1 class="mb-2 h2">{{room.name|title}}.</h1>
+                        <ul class="nav nav-stack gap-3 align-items-center">
+                            <li class="nav-item">
+                                <div class="nav-link">
+                                    by <a href="{% url 'base:user_profile' room.host.id %}"
+                                        class="text-primary btn-link">@{{room.host}}</a>
+                                </div>
+                            </li>
+                            <li class="nav-item"> <i class="bi bi-calendar-date pe-1"></i>
+                                {{room.created|date:"D d M Y"}}
+                            </li>
+                            <li class="nav-item"> <i class="bi bi-chat-dots-fill pe-1"></i>
+                                {{comments_count}}
+                            </li>
+                            <li class="nav-item"> <i class="bi bi-eye-fill pe-1"></i>
+                                {{room.views}}
+                            </li>
+                            <li class="nav-item">
+                                <a class="" href="{% url 'base:like_room' room.id %}">
+                                    <span class="p-0">
+                                        <i
+                                            class="fa-{% if request.user in room.like.all %}solid{% else %}regular{% endif %} fa-heart cursor-pointer p-2"></i>
+                                    </span> {{room.like.all.count}}
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- description -->
+                        <p class="mt-4 text-dark"><span class="dropcap">{{room.description|first}}</span>
+                            {{room.description|safe}}
+                        </p>
+
+                    </div>
+                </div>
+                <!-- Card END -->
+                <!-- Comments START -->
+                <div class="card">
+                    <div class="card-header pb-0 border-0">
+                        <h4>{{comments_count}} comments</h4>
+                    </div>
+                    <div class="card-body">
+                        {% for comment in comments %}
+                        {% if comment.is_parent %}
+                        <div class="my-4 d-flex">
+                            {% if comment.user.avatar %}
+                            <div class="avatar avatar-xs me-3">
+                                <a href="{% url 'base:user_profile' comment.user.id %}">
+                                    <img class="avatar-img rounded-circle border border-white"
+                                        src="{{comment.user.avatar.url}}" alt="">
+                                </a>
+                            </div>
+                            {% else %}
+                            <div class="avatar avatar-xs rounded-circle bg-primary me-3">
+                                <h6 class="text-white position-absolute top-50 start-50 translate-middle fw-bold">
+                                    <a class="text-white" href="{% url 'base:user_profile' comment.user.id %}">
+                                        {% if comment.user.first_name %}
+                                        {{comment.user.first_name|first}}{{comment.user.last_name|first}}
+                                        {% else %}
+                                        {{comment.user.username|first|upper}}
+                                        {% endif %}
+                                    </a>
+                                </h6>
+                            </div>
+                            {% endif %}
+                            <div>
+                                <div class="mb-2 d-sm-flex">
+                                    <h6 class="m-0 me-2">
+                                        <a href="{% url 'base:user_profile' comment.user.id %}">
+                                            @{{comment.user}}
+                                        </a>
+                                    </h6>
+                                    <span class="me-3 small">{{comment.created|timesince}} </span>
+                                </div>
+                                <p>{{comment.body}}</p>
+                                <p>
+                                    <a class="bg-light rounded-2 p-1 text-body" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseExample{{comment.id}}" aria-expanded="false"
+                                        aria-controls="collapseExample">
+                                        reply
+                                    </a>
+                                </p>
+                                <div class="collapse" id="collapseExample{{comment.id}}">
+                                    {% if request.user.is_authenticated %}
+                                    <form action="" method="POST" id="main_form" class="form-control">
+                                        {% csrf_token %}
+                                        <div>
+                                            <label for="comment">Reply here</label>
+                                            <input type="text" name="body"> <input type="hidden"
+                                                value="{{ comment.pk }}" name="parent">
+                                            <input type="submit" value="reply">
+                                        </div>
+                                    </form>
+                                    {% else %}
+                                    <p>Please login than add reply. <a href="{% url 'base:login' %}">Login page</a></p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% for replies in comment.getReplies %}
+                        <div class="my-4 d-flex ps-3 ps-md-5">
+                            {% if replies.user.avatar %}
+                            <div class="avatar avatar-xs me-3">
+                                <a href="{% url 'base:user_profile' replies.user.id %}">
+                                    <img class="avatar-img rounded-circle border border-white"
+                                        src="{{replies.user.avatar.url}}" alt="">
+                                </a>
+                            </div>
+                            {% else %}
+                            <div class="avatar avatar-xs rounded-circle bg-primary me-3">
+                                <h6 class="text-white position-absolute top-50 start-50 translate-middle fw-bold">
+                                    <a class="text-white" href="{% url 'base:user_profile' replies.user.id %}">
+                                        {% if replies.user.first_name %}
+                                        {{replies.user.first_name|first}}{{replies.user.last_name|first}}
+                                        {% else %}
+                                        {{replies.user.username|first|upper}}
+                                        {% endif %}
+                                    </a>
+                                </h6>
+                            </div>
+                            {% endif %}
+                            <div>
+                                <div class="mb-2 d-sm-flex">
+                                    <h6 class="m-0 me-2">
+                                        <a href="{% url 'base:user_profile' replies.user.id %}">
+                                            @{{replies.user}}
+                                        </a>
+                                    </h6>
+                                    <span class="me-3 small">{{replies.created|timesince}} </span>
+                                </div>
+                                <p>{{replies.body}} </p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endfor %}
+
+
+
+
+                        <!-- Comments END -->
+                        {% if request.user.is_authenticated %}
+                        <hr class="my-4">
+                        <!-- Reply START -->
+                        <div>
+                            <h4>Add comment</h4>
+                            <form method="post" action="" class="row g-3 mt-2 form-control">
+                                {% csrf_token %}
+                                <div class="col-12">
+                                    <label class="form-label">Your Comment *</label>
+                                    {{ comment_form.body|as_crispy_field }}
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Post comment</button>
+                                </div>
+                            </form>
+                        </div>
+                        {% else %}
+                        <p>Please login than add comment. <a href="{% url 'base:login' %}">Login page</a></p>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- Blog single END -->
+            </div>
+        </div>
+        <!-- Main content END -->
+
+        <div class="col-md-2 col-lg-3 col-xxl-4">
+
+            <!-- Chat sidebar START -->
+            <div class="sidebar-end p-4 bg-mode custom-scrollbar h-100">
+
+                <div class="sidebar-end-alignment d-flex justify-content-center flex-column">
+
+                    <!-- Right sidebar toggle -->
+                    <div class="d-flex gap-2 align-items-center">
+                        <a class="btn p-0 text-secondary sidebar-end-toggle d-none d-lg-flex">
+                            <i class="bi bi-justify-left fs-3"></i>
+                        </a>
+                        <h5 class="contact-title mb-0">Followers</h5>
+                    </div>
+
+                    <!-- Search contact END -->
+                    <ul class="list-unstyled">
+                        <!-- Contact item -->
+                        {% for participant in participants%}
+                        <li class="mt-3 hstack gap-3 align-items-center position-relative toast-btn"
+                            data-target="chatToast2">
+                            <!-- Avatar -->
+                            {% if participant.avatar %}
+                            <div class="avatar avatar-xs">
+                                <a href="{% url 'base:user_profile' participant.id %}">
+                                    <img class="avatar-img rounded-circle border border-white"
+                                        src="{{participant.avatar.url}}" alt="">
+                                </a>
+                            </div>
+                            {% else %}
+                            <div class="avatar avatar-xs rounded-circle bg-primary">
+                                <h6 class="text-white position-absolute top-50 start-50 translate-middle fw-bold">
+                                    <a class="text-white">
+                                        {% if participant.first_name %}
+                                        {{participant.first_name|first}}{{participant.last_name|first}}
+                                        {% else %}
+                                        {{participant.username|first|upper}}
+                                        {% endif %}
+                                    </a>
+                                </h6>
+                            </div>
+                            {% endif %}
+                            <!-- Info -->
+                            <div class="overflow-hidden contact-name">
+                                <a class="h6 mb-0" href="#!">
+                                    {% if participant.first_name %}
+                                    {{participant.first_name|title}}{{participant.last_name|title}}
+                                    {% else %}
+                                    {{participant.username|upper}}
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <!-- Chat time -->
+                            <div class="contact-status ms-auto fs-3"> <i class="bi bi-dot text-success"></i> </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- Offcanvas body END -->
+            </div>
+            <!-- Chat sidebar END -->
+        </div>
+    </div> <!-- Row END -->
+</div>
+
+
+
+{% endblock %}

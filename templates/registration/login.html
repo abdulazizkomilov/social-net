@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}{{page|title}}{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+{% if page == 'login' %}
+<div class="container">
+    <div class="row justify-content-center align-items-center">
+
+        <div class="col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5 p-3 mb-5">
+
+            <div class="card card-body text-center p-4 p-sm-5 mb-3">
+
+                <h1 class="mb-2">Sign in</h1>
+                <p class="mb-0">Don't have an account?<a href="{% url 'base:sign_up' %}"> Click here to sign up</a></p>
+
+                {% if messages %}
+                <br>
+                {% for message in messages %}
+                <p class="alert alert-success">{{ message }}</p>
+                {% endfor %}
+                {% endif %}
+
+                <form class="mt-sm-4" action="" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3 input-group-lg">
+                        <input type="text" class="form-control" name="username" placeholder="Enter username" />
+                    </div>
+
+                    <div class="mb-3 position-relative">
+
+                        <div class="input-group input-group-lg">
+                            <input class="form-control fakepassword" type="text" name="password"
+                                placeholder="Enter password" />
+                            <span class="input-group-text p-0">
+                                <i class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-3 w-50px"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 d-sm-flex justify-content-between">
+                        <div>
+                            <input type="checkbox" class="form-check-input">
+                            <label class="form-check-label">Remember me?</label>
+                        </div>
+                        <a class="" href="{% url 'password_reset'  %}" role="button">Forgot password?</a>
+                    </div>
+
+                    <div class="d-grid"><input type="submit" value="Login" class="btn btn-lg btn-primary" /></div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="container">
+    <div class="row justify-content-center align-items-center">
+
+        <div class="col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5">
+
+            <div class="card card-body text-center p-4 p-sm-5">
+
+                <h1 class="mb-2">Sign Up</h1>
+                <p class="mb-0">Don't have an account?<a href="{% url 'base:login' %}"> Login</a></p>
+
+                <form class="mt-sm-4" action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form|crispy }}
+
+                    <div class="d-grid"><input type="submit" value="Sign Up" class="btn btn-lg btn-primary" /></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+{% endblock %}

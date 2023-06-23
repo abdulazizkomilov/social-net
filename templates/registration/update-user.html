@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}{{page|title}}{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="col-md-8 col-lg-12 p-5">
+  <!-- Create a page START -->
+  <div class="card">
+      <!-- Title START -->
+      <div class="card-header border-0 pb-0">
+          <h1 class="h4 card-title mb-0">Update Profile</h1>
+      </div>
+      <!-- Title END -->
+      <!-- Create a page form START -->
+      <div class="card-body">
+          <form method="post" class="row g-3" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{form|crispy}}
+
+              <div class="col-12 text-end">
+                  <button type="submit" class="btn btn-primary mb-0">Update</button>
+              </div>
+
+          </form>
+      </div>
+      <!-- Create a page form END -->
+  </div>
+  <!-- Create a page END -->
+</div>
+
+{% endblock content %}

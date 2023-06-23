@@ -1,0 +1,53 @@
+<div class="col-lg-3">
+    <nav class="navbar navbar-expand-lg mx-0">
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar">
+            <!-- Offcanvas header -->
+            <div class="offcanvas-header">
+                <button type="button" class="btn-close text-reset ms-auto" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+
+            <div class="offcanvas-body d-block px-2 px-lg-0">
+                <!-- Card START -->
+                <div class="card overflow-hidden">
+                    <div class="card-header pb-0 border-0">
+                        <h5 class="card-title mb-0">Recent Activity (last 30min)</h5>
+                    </div>
+                    <div class="card-body">
+                        {% for comment in comments %}
+                        <div class="hstack gap-2 mb-3 bg-light rounded p-2">
+                            {% if comment.user.avatar %}
+                            <div class="avatar">
+                                <img class="avatar-img rounded-circle border border-white border-3"
+                                    src="{{comment.user.avatar.url}}" alt="">
+                            </div>
+                            {% else %}
+                            <div class="avatar rounded-circle bg-primary">
+                                <h6 class="text-white position-absolute top-50 start-50 translate-middle fw-bold">
+                                    <a class="text-white" href="{% url 'base:user_profile' comment.user.id %}">
+                                        {% if comment.user.first_name %}
+                                        {{comment.user.first_name|first}}{{comment.user.last_name|first}}
+                                        {% else %}
+                                        {{comment.user.username|first|upper}}
+                                        {% endif %}
+                                    </a>
+                                </h6>
+                            </div>
+                            {% endif %}
+                            <!-- Title -->
+                            <div class="overflow-hidden">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="mb-1"> <a href="{% url 'base:user_profile' comment.user.id %}"> 
+                                        @{{comment.user}} <span class="badge bg-primary bg-opacity-10 text-primary small"> {{comment.created|timesince}}</span>
+                                    </a></h6>
+                                </div>
+                                <p class="small p-1">replyed to group "<a href="{% url 'base:home' %}?q={{comment.room.topic.name}}">{{comment.room.name|truncatewords:3}}</a>"</p>
+                                <p class="mb-0 small bg-mode rounded p-2">{{comment.body}}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+    </nav>
+</div>

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row g-4">
+
+        {% include 'component/topics.html' %}
+
+        <div class="col-md-4 col-lg-6 vstack gap-2">
+            <div class="card">
+                <div class="">
+                    <div class="">
+                        <center><h5 class="mt-2 p-2" style="color: dodgerblue;">Found {{room_count}} Groups For {% if q != '' %}{{q|title}}{% else %}All{% endif %}</h5></center>
+                    </div>
+                </div>
+            </div>
+        
+            {% include 'component/feed.html' %}
+        </div>
+
+        {% include 'component/activity.html' %}
+
+    </div>
+</div>
+
+{% endblock %}

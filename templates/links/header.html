@@ -1,0 +1,265 @@
+<header class="navbar-light bg-mode fixed-top">
+
+
+    <nav class="navbar navbar-icon navbar-expand-lg">
+        <div class="container-fluid">
+
+            <a class="navbar-brand" href="{% url 'base:home' %}">
+                <img class="light-mode-item navbar-brand-item" src="/media/svg/ds-dark.png">
+                <img class="dark-mode-item navbar-brand-item" src="/media/svg/ds-dark.png">
+            </a>
+
+            <button class="navbar-toggler ms-auto icon-md btn btn-light p-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-animation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+
+                <div class="nav mb-1 mt-3 mt-lg-0 flex-nowrap align-items-center px-4 px-lg-0">
+                    <div class="nav-item w-100">
+                        <form class="rounded position-relative" method="get" action="{% url 'base:home' %}"
+                            data-dashlane-rid="736652c52ce4da6b" data-form-type="">
+                            <input class="form-control ps-5 bg-light" name="q" type="search" placeholder="Search..."
+                                aria-label="Search" data-dashlane-rid="22db64f546207a1b" data-form-type="">
+                            <button
+                                class="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y"
+                                type="submit" data-dashlane-rid="3ced43fdd450e88d" data-form-type=""
+                                data-dashlane-label="true"><i class="bi bi-search fs-5"> </i></button>
+                        </form>
+                    </div>
+                </div>
+
+                <ul class="navbar-nav navbar-nav-scroll ms-auto">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="{% url 'base:home' %}">
+                            <i class="bi bi-house"></i>
+                            <span class="nav-text"> Home</span>
+                        </a>
+                    </li>
+                    {% if url_name == 'home' or url_name == 'user_profile' %}
+                    <li class="nav-item dropdown ms-2">
+                        <div class="nav-link d-lg-none">
+                            <a class="border-0 bg-transparent" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                                <span class="nav-text"> Recent Activity</span>
+                            </a>
+                        </div>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+
+
+            <ul class="nav flex-nowrap align-items-center ms-sm-3 list-unstyled">
+
+                <li class="nav-item ms-2 dropdown">
+                    {% if request.user.is_authenticated %}
+                    {% if request.user.avatar %}
+                    <a class="nav-link icon-md p-0" href="" id="profileDropdown" aria-haspopup="true"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="avatar-img rounded-2" src="{{request.user.avatar.url}}" alt="">
+                    </a>
+                    {% else %}
+                    <a class="nav-link icon-md p-0" href="" id="profileDropdown" aria-haspopup="true"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="avatar-img avatar rounded-circle bg-primary">
+                            <h6 class="text-white position-absolute top-50 start-50 translate-middle fw-bold">
+                                {% if request.user.first_name %}
+                                {{request.user.first_name|first}}{{request.user.last_name|first}}
+                                {% else %}
+                                {{request.user.username|first|upper}}
+                                {% endif %}
+                            </h6>
+                        </div>
+                    </a>
+                    {% endif %}
+                    <ul class="dropdown-menu dropdown-animation dropdown-menu-end pt-3 small me-md-n2"
+                        aria-labelledby="profileDropdown">
+
+                        <li class="px-3">
+                            <div class="d-flex align-items-center position-relative">
+
+                                {% if user.avatar %}
+                                <a class="nav-link icon-md p-0" id="profileDropdown" aria-haspopup="true"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img class="avatar-img rounded-2" src="{{user.avatar.url}}" alt="">
+                                </a>
+                                {% else %}
+                                <a class="nav-link icon-md p-0" id="profileDropdown" aria-haspopup="true"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="avatar-img avatar rounded-circle bg-primary">
+                                        <h6
+                                            class="text-white position-absolute top-50 start-50 translate-middle fw-bold">
+                                            {% if user.first_name %}
+                                            {{user.first_name|first}}{{user.last_name|first}}
+                                            {% else %}
+                                            {{user.username|first|upper}}
+                                            {% endif %}
+                                        </h6>
+                                    </div>
+                                </a>
+                                {% endif %}
+                                <div>
+                                    <a class="h6 stretched-link ms-2">
+                                        {% if user.first_name %}
+                                        {{user.first_name|title}} {{user.last_name|title}}
+                                        {% else %}
+                                        {{user.username|title}}
+                                        {% endif %}
+                                    </a>
+                                    <p class="small m-0 ms-2">@{{user.username}}</p>
+                                </div>
+                            </div>
+                            <a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center"
+                                href="{% url 'base:user_profile' user.id %}">View profile</a>
+                        </li>
+
+                        <li><a class="dropdown-item" href=""><i class="bi bi-gear fa-fw me-2"></i>Settings &amp;
+                                Privacy</a></li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'base:create_room' %}">
+                                <i class="bi bi-plus-circle-fill me-2"></i>Create Room
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'password_change' %}">
+                                <i class="fa-fw bi bi-card-text me-2"></i>Password Change
+                            </a>
+                        </li>
+                        <li class="dropdown-divider"></li>
+                        <li><a class="dropdown-item bg-danger-soft-hover" href="{% url 'base:logout' %}"><i
+                                    class="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <div
+                                class="modeswitch-item theme-icon-active d-flex justify-content-center gap-3 align-items-center p-2 pb-0">
+                                <button type="button" class="btn btn-modeswitch nav-link text-primary-hover mb-0 active"
+                                    data-bs-theme-value="light" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    data-bs-title="Light">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-sun fa-fw mode-switch" viewBox="0 0 16 16">
+                                        <path
+                                            d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z">
+                                        </path>
+                                        <use href="#"></use>
+                                    </svg>
+                                </button>
+                                <button type="button" class="btn btn-modeswitch nav-link text-primary-hover mb-0"
+                                    data-bs-theme-value="dark" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    data-bs-title="Dark">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-moon-stars fa-fw mode-switch" viewBox="0 0 16 16">
+                                        <path
+                                            d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z">
+                                        </path>
+                                        <path
+                                            d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z">
+                                        </path>
+                                        <use href="#"></use>
+                                    </svg>
+                                </button>
+                                <button type="button" class="btn btn-modeswitch nav-link text-primary-hover mb-0"
+                                    data-bs-theme-value="auto" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    data-bs-title="Auto">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-circle-half fa-fw mode-switch" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"></path>
+                                        <use href="#"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </li>
+
+                    </ul>
+                    {% else %}
+                    <a class="nav-link icon-md p-0" href="" id="profileDropdown" aria-haspopup="true"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="avatar-img avatar rounded-circle bg-primary">
+                            <h4 class="text-white position-absolute top-50 start-50 translate-middle fw-bold">
+                                <i class="bi bi-person-circle"></i>
+                            </h4>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-animation dropdown-menu-end pt-3 small me-md-n2"
+                        aria-labelledby="profileDropdown">
+
+                        <li>
+                            <a class="dropdown-item" href="{% url 'base:login' %}">
+                                <i class="bi bi-person-fill-check"></i> Login
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'base:sign_up' %}">
+                                <i class="bi bi-person-add"></i> Sign Up
+                            </a>
+                        </li>
+                        <li class="dropdown-divider"></li>
+
+                        <li>
+                            <div
+                                class="modeswitch-item theme-icon-active d-flex justify-content-center gap-3 align-items-center p-2 pb-0">
+                                <button type="button" class="btn btn-modeswitch nav-link text-primary-hover mb-0 active"
+                                    data-bs-theme-value="light" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    data-bs-title="Light">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-sun fa-fw mode-switch" viewBox="0 0 16 16">
+                                        <path
+                                            d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z">
+                                        </path>
+                                        <use href="#"></use>
+                                    </svg>
+                                </button>
+                                <button type="button" class="btn btn-modeswitch nav-link text-primary-hover mb-0"
+                                    data-bs-theme-value="dark" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    data-bs-title="Dark">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-moon-stars fa-fw mode-switch" viewBox="0 0 16 16">
+                                        <path
+                                            d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z">
+                                        </path>
+                                        <path
+                                            d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z">
+                                        </path>
+                                        <use href="#"></use>
+                                    </svg>
+                                </button>
+                                <button type="button" class="btn btn-modeswitch nav-link text-primary-hover mb-0"
+                                    data-bs-theme-value="auto" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    data-bs-title="Auto">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-circle-half fa-fw mode-switch" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"></path>
+                                        <use href="#"></use>
+                                    </svg>
+                                </button>
+                            </div>
+                        </li>
+
+                    </ul>
+                    {% endif %}
+                </li>
+
+
+            </ul>
+
+
+        </div>
+    </nav>
+
+</header>
+
+<div class="mt-5 p-2" id="main">
+</div>
+<script>
+    setPage()
+</script>
