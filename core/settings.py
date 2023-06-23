@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-cnk(@=wsfo8n9@4=z%l&9q3f$*2mczjk!vqz&c7(jq1m92@wqh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.pythonanywhere.com', '127.0.0.1',]
+ALLOWED_HOSTS = ['social-net.up.railway.app', '127.0.0.1',]
 
 
 # Application definition
@@ -57,11 +57,11 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
 ]
 
-# CSRF_TRUSTED_ORIGINS = [
-#     'https://webfastfood.up.railway.app',
-#     'http://webfastfood.up.railway.app',
-#     'http://127:0.0.1:8000',
-# ]
+CSRF_TRUSTED_ORIGINS = [
+    'https://social-net.up.railway.app',
+    'http://social-net.up.railway.app',
+    'http://127:0.0.1:8000',
+]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
