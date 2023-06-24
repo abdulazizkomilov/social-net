@@ -4,7 +4,7 @@
       <div class="row g-4">
         <div class="col-sm-6 col-lg-3">
           <!-- Footer Widget -->
-          <img src="assets/images/logo.svg" alt="">
+          <img src="media/svg/ds-dark.png" width="50" height="50" alt="">
           <p class="mt-3"> </p>
         </div>
         <div class="col-sm-6 col-lg-3">
@@ -77,22 +77,22 @@
 <script type="text/javascript" src='{% static "ckeditor/ckeditor-init.js" %}'></script>
 <script type="text/javascript" src='{% static "ckeditor/ckeditor/ckeditor.js" %}'></script>
 <script src="https://kit.fontawesome.com/e53882f010.js" crossorigin="anonymous"></script>
-<script src="/static/bootstrap.bundle.min.js"></script>
+<script src="{% static 'css2' %}/static/bootstrap.bundle.min.js"></script>
 
-<script src="/static/tiny-slider.js"></script>
-<script src="/static/OverlayScrollbars.min.js"></script>
-<script src="/static/choices.min.js"></script>
-<script src="/static/glightbox.min.js"></script>
-<script src="/static/flatpickr.min.js"></script>
-<script src="/static/plyr.js"></script>
-<script src="/static/dropzone.min.js"></script>
-<script src="/static/zuck.min.js"></script>
-<script src="/static/zuck-stories.js"></script>
+<script src="{% static 'tiny-slider.js' %}"></script>
+<script src="{% static 'OverlayScrollbars.min.js' %}"></script>
+<script src="{% static 'choices.min.js' %}"></script>
+<script src="{% static 'glightbox.min.js' %}"></script>
+<script src="{% static 'flatpickr.min.js' %}"></script>
+<script src="{% static 'plyr.js' %}"></script>
+<script src="{% static 'dropzone.min.js' %}"></script>
+<script src="{% static 'zuck.min.js' %}"></script>
+<script src="{% static 'zuck-stories.js' %}"></script>
 <div id="zuck-modal" class="with-cube with-effects" tabindex="1" style="display: none;">
     <div id="zuck-modal-content"></div>
 </div>
 
-<script src="/static/functions.js"></script><input type="file" multiple="multiple" class="dz-hidden-input"
+<script src="{% static 'functions.js' %}"></script><input type="file" multiple="multiple" class="dz-hidden-input"
     tabindex="-1"
     style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;"><input type="file"
     multiple="multiple" class="dz-hidden-input" tabindex="-1"
