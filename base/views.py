@@ -228,7 +228,7 @@ def createRoom(request):
         'topics': topics,
     }
 
-    return render(request, 'room_form.html', context)
+    return render(request, 'room_create.html', context)
 
 
 @csrf_exempt

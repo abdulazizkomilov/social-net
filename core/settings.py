@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-cnk(@=wsfo8n9@4=z%l&9q3f$*2mczjk!vqz&c7(jq1m92@wqh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['social-net.up.railway.app', '127.0.0.1',]
 

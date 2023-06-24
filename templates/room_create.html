@@ -8,14 +8,14 @@
     <div class="card">
         <!-- Title START -->
         <div class="card-header border-0 pb-0">
-            <h1 class="h4 card-title mb-0">Update a room</h1>
+            <h1 class="h4 card-title mb-0">Create a page</h1>
         </div>
         <!-- Title END -->
         <!-- Create a page form START -->
         <div class="card-body">
-            <form id="article-form" action="{% url 'base:update_room' room.id %}" method="post">
+            <form id="article-form" action="{% url 'base:create_room' %}" method="post">
                 {{form|crispy}}
-                <button id="submitButton1" data-redirect="{% url 'base:update_room' room.id %}"  type="button" class="btn btn-primary" >Submit</button>
+                <button id="submitButton1" data-redirect="{% url 'base:create_room' %}"  type="button" class="btn btn-primary" >Submit</button>
             </form>
         </div>
         <!-- Create a page form END -->
