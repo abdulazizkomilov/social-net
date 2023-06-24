@@ -5,7 +5,7 @@
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
                 <div>
-                    <h6 class="card-title mb-0"> <a class="pro-link" data-url="{% url 'base:room' room.id %}"> {{room.name|truncatewords:10}} </a></h6>
+                    <h6 class="card-title mb-0"> <a class="pro-link" href="{% url 'base:room' room.id %}"> {{room.name|truncatewords:10}} </a></h6>
                     <div class="nav nav-divider">
                         <p class="nav-item mb-0 small mt-1"><a href="{% url 'base:user_profile' room.host.id %}">@{{room.host.username}}</a></p>
                         <span class="nav-item small"> {{room.created|date:"D d M Y"}}</span>
@@ -57,7 +57,7 @@
             </li>
             {% if request.user == room.host %}
             <li class="nav-item">
-                <a class="pro-link btn btn-warning" data-url="{% url 'base:update_room' room.id %}">Update</a>
+                <a class="pro-link btn btn-warning" href="{% url 'base:update_room' room.id %}">Update</a>
             </li>
             {% endif %}
             <li class="nav-item">
