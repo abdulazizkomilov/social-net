@@ -4,14 +4,6 @@
     <div class="card-header border-0 pb-0">
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
-                <a class="avatar me-2 icon-md p-0" href="{% url 'base:room' room.id %}">
-                    <div class="avatar-img avatar rounded-circle bg-primary">
-                        <h6 class="text-white position-absolute top-50 start-50 translate-middle fw-bold">
-                            <a href="{% url 'base:room' room.id %}">{{room.name|first|upper}}</a>
-                        </h6>
-                    </div>
-                </a>
-                <!-- Info -->
                 <div>
                     <h6 class="card-title mb-0"> <a class="pro-link" data-url="{% url 'base:room' room.id %}"> {{room.name|truncatewords:10}} </a></h6>
                     <div class="nav nav-divider">
