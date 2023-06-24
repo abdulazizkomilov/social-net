@@ -20,7 +20,7 @@
                     </div>
                     <div class="card-body">
                         {% for topic in topics %}
-                        <div class="hstack gap-2 btn-dark rounded p-2">
+                        <div class="hstack gap-2 bg-body rounded p-2">
                             <div class="overflow-hidden">
                                 <a class="h6 mb-0" href="{% url 'base:home' %}?q={{topic.name}}">{{topic.name}} </a>
                                 <p class="mb-0 small text-truncate">{{topic.room_set.all.count}} rooms available</p>
