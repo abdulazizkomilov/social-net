@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-cnk(@=wsfo8n9@4=z%l&9q3f$*2mczjk!vqz&c7(jq1m92@wqh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
+ALLOWED_HOSTS = ['social-net.up.railway.app', '127.0.0.1',]
 
 
 # Application definition
@@ -45,6 +45,12 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     'ckeditor',
     'ckeditor_uploader',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://social-net.up.railway.app',
+    'http://social-net.up.railway.app',
+    'http://127:0.0.1:8000',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -98,19 +104,17 @@ AUTH_USER_MODEL = 'base.User'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'railway',
-#         'USER': 'postgres',
-#         'PASSWORD': 't3MFbMbKTkZwtdSktpXA',
-#         'HOST': 'containers-us-west-132.railway.app',
-#         'PORT': '5799',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 't3MFbMbKTkZwtdSktpXA',
+        'HOST': 'containers-us-west-132.railway.app',
+        'PORT': '5799',
+    }
+}
 
-
-DATABASES = {}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
