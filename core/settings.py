@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-cnk(@=wsfo8n9@4=z%l&9q3f$*2mczjk!vqz&c7(jq1m92@wqh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['social-net-eosin.vercel.app', '127.0.0.1',]
+ALLOWED_HOSTS = ['social-net-pro.vercel.app', '127.0.0.1',]
 
 
 # Application definition
@@ -48,8 +48,8 @@ INSTALLED_APPS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://social-net-eosin.vercel.app',
-    'http://social-net-eosin.vercel.app',
+    'https://social-net-pro.vercel.app',
+    'http://social-net-pro.vercel.app',
     'http://127:0.0.1:8000',
 ]
 
